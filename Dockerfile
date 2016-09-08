@@ -13,7 +13,7 @@ RUN yum install -y nodejs
 
 # Install Maven
 RUN wget http://www.eu.apache.org/dist/maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.tar.gz \
- && tar -zxf apache-maven-3.3.9-bin.tar.gz -C /usr/lib/ \ 
+ && tar -zxf apache-maven-3.3.9-bin.tar.gz -C /usr/lib/ \
  && ln -s /usr/lib/apache-maven-3.3.9/bin/mvn /usr/bin/mvn \
  && rm -rf /apache-maven-3.3.9-bin.tar.gz 
 
@@ -32,9 +32,9 @@ RUN git clone https://github.com/apache/zeppelin.git $ZEPPELIN_HOME \
  && mvn clean package -DskipTests -Pspark-1.6
 
 # Set Spark values
-RUN cd $ZEPPELIN_HOME \ 
+RUN cd $ZEPPELIN_HOME \
  && cp conf/zeppelin-env.sh.template conf/zeppelin-env.sh \
- && sed -i 's|#export SPARK_HOME=|export SPARK_HOME=/usr/lib/spark-1.6.0|' conf/zeppelin-env.sh
+ && sed -i 's|# export SPARK_HOME |export SPARK_HOME=/usr/lib/spark-1.6.0-bin-hadoop2.6|' conf/zeppelin-env.sh
 
 WORKDIR $ZEPPELIN_HOME
 CMD ["bin/zeppelin.sh"]
